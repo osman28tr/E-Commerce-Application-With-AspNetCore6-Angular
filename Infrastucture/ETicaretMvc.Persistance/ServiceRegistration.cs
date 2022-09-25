@@ -1,5 +1,7 @@
 ﻿using ETicaretMvc.Application.Abstractions;
 using ETicaretMvc.Persistance.Concretes;
+using ETicaretMvc.Persistance.Contexts;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
@@ -13,7 +15,7 @@ namespace ETicaretMvc.Persistance
     {
         public static void AddPersistanceServices(this IServiceCollection services)
         {
-            services.AddSingleton<IProductService, ProductService>();
+            services.AddDbContext<ETicaretDbContext>(options => options.UseSqlServer(Configuration.ConnectionString));
         }
     }
 }
