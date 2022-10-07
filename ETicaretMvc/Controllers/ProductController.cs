@@ -9,30 +9,24 @@ namespace ETicaretMvc.Controllers
     {
         private readonly IProductWriteRepository _productWriteRepository;
         private readonly IProductReadRepository _productReadRepository;
-        public ProductController(IProductWriteRepository productWriteRepository, IProductReadRepository productReadRepository)
+
+        private readonly IOrderWriteRepository _orderWriteRepository;
+        private readonly IOrderReadRepository _orderReadRepository;
+        private readonly ICustomerWriteRepository _customerWriteRepository;
+        public ProductController(IProductWriteRepository productWriteRepository, IProductReadRepository productReadRepository, IOrderWriteRepository orderWriteRepository, ICustomerWriteRepository customerWriteRepository, IOrderReadRepository orderReadRepository)
         {
             _productWriteRepository = productWriteRepository;
             _productReadRepository = productReadRepository;
+            _orderWriteRepository = orderWriteRepository;
+            _customerWriteRepository = customerWriteRepository;
+            _orderReadRepository = orderReadRepository;
         }
         [HttpGet]
         public async Task Get()
         {
-            //_productWriteRepository.AddRangeAsync(new()
-            //{
-            //    new(){Id=Guid.NewGuid(),Name="Product1",Price=100,CreatedDate=DateTime.Now,Stock=10},
-            //    new(){Id=Guid.NewGuid(),Name="Product2",Price=200,CreatedDate=DateTime.Now,Stock=20},
-            //    new(){Id=Guid.NewGuid(),Name="Product3",Price=300,CreatedDate=DateTime.Now,Stock=30},
-            //});
-            //await _productWriteRepository.SaveAsync();
-            Product product = await _productReadRepository.GetByIdAsync("f558ecc9-a372-4c5d-8c2e-301d78cdd005", true);
-            product.Name = "ahmet";
-            await _productWriteRepository.SaveAsync();
-        }
-        [HttpGet("{id}")]
-        public async Task<IActionResult> Get(string id)
-        {
-            Product product = await _productReadRepository.GetByIdAsync(id);
-            return NotFound();
+            Order order = await _orderReadRepository.GetByIdAsync("3bb633b1-66fc-4f6a-8ef4-08daa871783f");
+            order.Address = "İstanbul";
+            await _orderWriteRepository.SaveAsync();
         }
     }
 }
