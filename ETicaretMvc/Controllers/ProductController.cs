@@ -17,12 +17,15 @@ namespace ETicaretMvc.Controllers
         [HttpGet]
         public async Task Get()
         {
-            _productWriteRepository.AddRangeAsync(new()
-            {
-                new(){Id=Guid.NewGuid(),Name="Product1",Price=100,CreatedDate=DateTime.Now,Stock=10},
-                new(){Id=Guid.NewGuid(),Name="Product2",Price=200,CreatedDate=DateTime.Now,Stock=20},
-                new(){Id=Guid.NewGuid(),Name="Product3",Price=300,CreatedDate=DateTime.Now,Stock=30},
-            });
+            //_productWriteRepository.AddRangeAsync(new()
+            //{
+            //    new(){Id=Guid.NewGuid(),Name="Product1",Price=100,CreatedDate=DateTime.Now,Stock=10},
+            //    new(){Id=Guid.NewGuid(),Name="Product2",Price=200,CreatedDate=DateTime.Now,Stock=20},
+            //    new(){Id=Guid.NewGuid(),Name="Product3",Price=300,CreatedDate=DateTime.Now,Stock=30},
+            //});
+            //await _productWriteRepository.SaveAsync();
+            Product product = await _productReadRepository.GetByIdAsync("f558ecc9-a372-4c5d-8c2e-301d78cdd005", true);
+            product.Name = "ahmet";
             await _productWriteRepository.SaveAsync();
         }
         [HttpGet("{id}")]
